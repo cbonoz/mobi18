@@ -579,6 +579,11 @@ content@4.x.x:
   dependencies:
     boom "7.x.x"
 
+convert-csv-to-json@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.drift.npme.io/convert-csv-to-json/-/convert-csv-to-json-0.0.13.tgz#1af049bf78cea673575855d86a24f28207f89c08"
+  integrity sha1-GvBJv3jOpnNXWFXYaiTyggf4nAg=
+
 cookie-signature@1.0.6:
   version "1.0.6"
   resolved "https://registry.drift.npme.io/cookie-signature/-/cookie-signature-1.0.6.tgz#e303a882b342cc3ee8ca513a79999734dab3ae2c"

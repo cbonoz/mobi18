@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/cbonoz/portx#readme",
   "dependencies": {
+    "convert-csv-to-json": "^0.0.13",
     "express": "^4.16.4",
     "hapi": "^17.8.1",
     "lotion": "^0.3.0"
