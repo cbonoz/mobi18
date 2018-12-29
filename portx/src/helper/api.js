@@ -1,7 +1,7 @@
 const library = (function () {
     const axios = require('axios');
 
-    const BASE_URL = `localhost:8001`
+    const BASE_URL = `http://localhost:8001`
 
     function getPorts() {
         return axios.get(`${BASE_URL}/ports`)
