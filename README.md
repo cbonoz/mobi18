@@ -1,14 +1,26 @@
 # PortX
 
+<!-- A port reservation system powered by blockchain -->
+
 An Blockchain-based platform for managing reservations at ports, transparently and efficiently.
 
-## Concept
+## Inspiration
 
+Severe problems are created at ports when drivers can’t move through terminals effectively. The increase in turn times is, in part, due to a high volume of containers passing through the ports, but is exacerbated by inefficiencies at the ports themselves as the ports struggle to find ways to keep up with increasing container volumes. In an effort to increase efficiency and decrease congestion to reduce turn times, ports across the country are working to implement new systems and procedures.
 
-## Structure
+Many independent ports have a 
 
+## What it does
+
+## How I built it
 * `client/` - client side code (website) for the portx project
 * `server/` - server side code (ledger recording and querying logic) for portx
+
+## Challenges I ran into
+
+## Accomplishments that I'm proud of
+
+## What I learned
 
 ## Building and running the project
 
@@ -24,6 +36,7 @@ From the `client` folder:
 
 The app should now be running on port 8000, with the server responding on port 8001.
 
+## What's next for PortX
 
 ## Dev Notes
 
