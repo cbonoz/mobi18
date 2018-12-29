@@ -63,7 +63,7 @@ server.route({
     handler: function (request, h) {
 
         // TODO: process scheduling request for a given port id (returning conflicts if any).
-        // If scheduling request
+        // If scheduling request successful, create a new entry in the state object.
         return {}
     }
 })
