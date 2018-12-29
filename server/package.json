@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "RepairX server side code",
+  "main": "index.js",
+  "author": "Chris Buonocore <chrisdistrict@gmail.com>",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbonoz/repairx.git"
+  },
+  "keywords": [
+    "mobi",
+    "repairx",
+    "ledger",
+    "blockchain",
+    "mobility",
+    "reporting"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cbonoz/repairx/issues"
+  },
+  "homepage": "https://github.com/cbonoz/repairx#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "hapi": "^17.8.1",
+    "lotion": "^0.3.0"
+  }
+}
