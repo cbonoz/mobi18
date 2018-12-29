@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "RepairX server side code",
+  "description": "PortX server side code",
   "main": "index.js",
   "author": "Chris Buonocore <chrisdistrict@gmail.com>",
   "scripts": {
@@ -9,11 +9,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cbonoz/repairx.git"
+    "url": "git+https://github.com/cbonoz/portx.git"
   },
   "keywords": [
     "mobi",
-    "repairx",
+    "portx",
     "ledger",
     "blockchain",
     "mobility",
@@ -21,9 +21,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cbonoz/repairx/issues"
+    "url": "https://github.com/cbonoz/portx/issues"
   },
-  "homepage": "https://github.com/cbonoz/repairx#readme",
+  "homepage": "https://github.com/cbonoz/portx#readme",
   "dependencies": {
     "express": "^4.16.4",
     "hapi": "^17.8.1",

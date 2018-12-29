@@ -1,8 +1,8 @@
 {
-  "name": "repairx-client",
-  "description": "RepairX client application source code",
+  "name": "portx-client",
+  "description": "PortX client application source code",
   "version": "1.0.0",
-  "author": "RepairX",
+  "author": "PortX",
   "dependencies": {
     "babel-eslint": "^10.0.1",
     "classnames": "^2.2.6",
