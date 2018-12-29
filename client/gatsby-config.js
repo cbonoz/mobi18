@@ -19,20 +19,6 @@ module.exports = {
   },
   plugins: [
     "gatsby-plugin-react-helmet",
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "posts",
-        path: `${__dirname}/content/${config.blogPostDir}`
-      }
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        name: "authors",
-        path: `${__dirname}/content/${config.blogAuthorDir}`
-      }
-    },
     "gatsby-transformer-json",
     {
       resolve: "gatsby-transformer-remark",
