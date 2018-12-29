@@ -13,7 +13,7 @@ Many independent ports have a
 ## What it does
 
 ## How I built it
-* `client/` - client side code (website) for the portx project
+* `portx/` - client side code (website) for the portx project
 * `server/` - server side code (ledger recording and querying logic) for portx
 
 ## Challenges I ran into
