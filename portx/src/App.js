@@ -11,12 +11,10 @@ class App extends Component {
           <p>
             Welcome to PortX
           </p>
-          <a
-            className="App-link"
+          <a className="App-link"
             href="https://reactjs.org"
             target="_blank"
-            rel="noopener noreferrer"
-          >
+            rel="noopener noreferrer">
             Replace me with a Map View, with a header navigation bar.
           </a>
         </header>
