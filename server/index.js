@@ -5,35 +5,35 @@ const Hapi = require('hapi')
 
 // Create a server with a host and port
 const server = Hapi.server({
-    host:'localhost',
-    port:8001
+    host: 'localhost',
+    port: 8001
 })
 
 // Add the route
 server.route({
-    method:'GET',
-    path:'/hello',
-    handler:function(request,h) {
+    method: 'GET',
+    path: '/hello',
+    handler: function (request, h) {
 
-        return'hello world'
+        return 'hello world'
     }
 })
 
 const app = lotion({
-  initialState: {
-    count: 0
-  }
+    initialState: {
+        count: 0
+    }
 })
 
-app.use(function(state, tx) {
+app.use(function (state, tx) {
     // State evolution handler
-  if (state.count === tx.nonce) {
-    state.count++
-  }
+    if (state.count === tx.nonce) {
+        state.count++
+    }
 })
 
 // Start the hapi server
-const start =  async function() {
+const start = async function () {
 
     // Start the tendermint server followed by the API.
     try {
