@@ -7,7 +7,7 @@ server/gradlew
 server/server.iml
 server/gradlew.bat
 server/logs/
-
+img/.DS_Store
 client/node_modules
 client/build
 test/
