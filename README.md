@@ -26,10 +26,10 @@ Many independent ports have a
 
 From the `server` folder:
 
-<h3>Running a single node (from an Intellij build configuration):</h3>
+<h5>Running a single node (from an Intellij build configuration):</h5>
 <img src="./img/node_conf.png" width=600>
 
-<h3>Running a cluster (example)</h3>
+<h5>Running a cluster (example)</h5>
 This project is based on Corda (https://github.com/corda/corda), to run the sample node configuration the following command can be used once the project is setup locally.
 <pre>
     ./gradlew deployNodes
