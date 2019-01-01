@@ -24,7 +24,7 @@ Many independent ports have a
 
 ## Building and running the project
 
-From the `server` folder:
+<h4>From the `server` folder:</h4>
 
 <h5>Running a single node (from an Intellij build configuration):</h5>
 <img src="./img/node_conf.png" width=600>
@@ -37,7 +37,7 @@ This project is based on Corda (https://github.com/corda/corda), to run the samp
 
 Refer to <a href="https://docs.corda.net/tutorial-cordapp.html#running-nodes-across-machines">Running  Nodes</a> from the Corda docs for more information.
 
-From the `client` folder:
+<h4>From the `client` folder:</h4>
 <pre>
     yarn && yarn start
 </pre>
