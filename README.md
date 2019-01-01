@@ -25,9 +25,16 @@ Many independent ports have a
 ## Building and running the project
 
 From the `server` folder:
+
+This project is based on Corda (https://github.com/corda/corda), to run the sample node configuration the following command can be used once the project is setup locally.
 <pre>
-    go build && ./app
+    ./gradlew deployNodes
 </pre>
+
+To run a single node from Intellij:
+<img src="./img/node_conf.png" width=600>
+
+Refer to <a href="https://docs.corda.net/tutorial-cordapp.html#running-nodes-across-machines">Running  Nodes</a> from the Corda docs for more information.
 
 From the `client` folder:
 <pre>
