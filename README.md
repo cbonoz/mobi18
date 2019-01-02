@@ -8,19 +8,27 @@ An Blockchain-based platform for managing reservations at ports, transparently a
 
 Severe problems are created at ports when drivers can’t move through terminals effectively. The increase in turn times is, in part, due to a high volume of containers passing through the ports, but is exacerbated by inefficiencies at the ports themselves as the ports struggle to find ways to keep up with increasing container volumes. In an effort to increase efficiency and decrease congestion to reduce turn times, ports across the country are working to implement new systems and procedures.
 
-Many independent ports have a 
+Ports and trucking companies operate independently, but often have to share resources. The goal of this project is to create a prototype of an online reservation system based on blockchain that will ultimately allow these vehicles to autonomously reserve and manage scheduling at different ports throughout the world.
 
 ## What it does
 
-## How I built it
+PortX provides an online platform for reserving time slots at different ports. Trucking companies can share their intent by placing a reservation (if available) at any of the listed ports. Other companies can see that there's an existing reservation, without having to disclose unecessary identifying information to other parties about who is actually in the specific time slot.
+
+## How we built it
 * `portx/` - client side code (website) for the portx project
 * `server/` - server side code (ledger recording and querying logic) for portx
 
-## Challenges I ran into
+## Challenges we ran into
 
-## Accomplishments that I'm proud of
+Creating a scalable blockchain backend was something that we weren't used to doing. We leveraged the open source contract framework corda (https://github.com/corda/corda) to create a ledger-based booking system.
 
-## What I learned
+## Accomplishments that we're proud of
+
+It works.
+
+## What we learned
+
+How to implement flow states for secure/notarized contracts using a Corda. Creating a UI interface for querying and displaying the information state of the blockchain in an intuitive and user friendly way. While the blockchain (and internal storage mechanism) of the actual reservations are abstracted away, users can still get all the benefit, without the complexity, by using the PortX web interface and API's.
 
 ## Building and running the project
 
@@ -46,8 +54,7 @@ The app should now be running on port 8000, with the server responding on port 8
 
 ## What's next for PortX
 
-## Dev Notes
-
+Next step would be to pilot the reservation system with a few ports. This could be done with not a lot of overhead as long as we have access to some subset of their scheduling manifest information. The bookings can be managed autonomously through the PortX API if scripted.
 
 ## Other Resources
 * https://github.com/corda/corda
