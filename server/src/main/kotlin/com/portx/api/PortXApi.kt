@@ -199,13 +199,19 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
             val startStartCondition = ScheduleEntrySchemaV1.PersistentScheduleEntry::startTime.greaterThan(start)
             val startEndCondition = ScheduleEntrySchemaV1.PersistentScheduleEntry::startTime.lessThan(end)
             // Verify that the portId matches and one of the start or end times falls within the query range.
+            val endAfter = ScheduleEntrySchemaV1.PersistentScheduleEntry::endTime.greaterThanOrEqual(end)
+            val startBefore = ScheduleEntrySchemaV1.PersistentScheduleEntry::startTime.lessThanOrEqual(start)
+
             val criteria = generalCriteria
                     .and(QueryCriteria.VaultCustomQueryCriteria(portIdType))
-                    .and(QueryCriteria.VaultCustomQueryCriteria(endStartCondition)
-                            .or(QueryCriteria.VaultCustomQueryCriteria(endEndCondition))
-                            .or(QueryCriteria.VaultCustomQueryCriteria(startStartCondition))
-                            .or(QueryCriteria.VaultCustomQueryCriteria(startEndCondition))
+                    .and(
+                            QueryCriteria.VaultCustomQueryCriteria(endStartCondition)
+                                    .or(QueryCriteria.VaultCustomQueryCriteria(endEndCondition))
+                                    .or(QueryCriteria.VaultCustomQueryCriteria(startStartCondition))
+                                    .or(QueryCriteria.VaultCustomQueryCriteria(startEndCondition))
+                                    .or(QueryCriteria.VaultCustomQueryCriteria(startBefore).and(QueryCriteria.VaultCustomQueryCriteria(endAfter)))
                     )
+            )
             rpcOps.vaultQueryBy<ScheduleEntryState>(criteria).states
         }
     }
