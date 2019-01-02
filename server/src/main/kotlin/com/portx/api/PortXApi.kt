@@ -211,7 +211,6 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
                                     .or(QueryCriteria.VaultCustomQueryCriteria(startEndCondition))
                                     .or(QueryCriteria.VaultCustomQueryCriteria(startBefore).and(QueryCriteria.VaultCustomQueryCriteria(endAfter)))
                     )
-            )
             rpcOps.vaultQueryBy<ScheduleEntryState>(criteria).states
         }
     }
