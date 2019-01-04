@@ -28,6 +28,15 @@ PortX provides an online platform for reserving time slots at different ports. T
 <p>The unit of data or state on the PortX ledger.</p>
 <img src="./img/schedule_entry_schema.png" width=600>
 
+<p>The V1 of our schema is relatively basic/foundational. There are few key fields - we'll later add capacities, reservation revisions, and other behavior</p>
+
+* *port_id*: The identifier for the port (indicated in the manifest ports.json
+* *owner*: The username of the user making the reservation
+* *signer*: The name of the node signing and validating the transaction for addition to the ledger
+* *start*: The start time of the reservation in ms (epoch).
+* *end*: The end time of the reservation in ms (epoch).
+* *linear_id* : The UUID of the transaction.
+
 <h5>Schedule Entry Contract:</h5>
 <p>The contract for initiating/validating a ledger transaction. We also then verify that an incoming transaction doesn't conflict with an existing one (i.e. schedule conflict). We require at least one node in the network to sign off on the contract.</p>
 <img src="./img/schedule_entry_contract.png" width=600>
