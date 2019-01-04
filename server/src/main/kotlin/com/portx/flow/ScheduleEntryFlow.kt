@@ -38,10 +38,6 @@ object ScheduleEntryFlow {
             object GENERATING_TRANSACTION : Step("Generating transaction based on new port Schedule Entry.")
             object VERIFYING_TRANSACTION : Step("Verifying contract constraints.")
             object SIGNING_TRANSACTION : Step("Signing transaction with our private key.")
-//            object GATHERING_SIGS : Step("Gathering the counterparty's signature.") {
-//                override fun childProgressTracker() = CollectSignaturesFlow.tracker()
-//            }
-
             object FINALISING_TRANSACTION : Step("Obtaining notary signature and recording transaction.") {
                 override fun childProgressTracker() = FinalityFlow.tracker()
             }
