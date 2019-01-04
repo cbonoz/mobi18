@@ -158,6 +158,7 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
         val portId = payload.portId
         val start = payload.start
         val end = payload.end
+        val owner = payload.owner
 
         try {
             validatePortId(portId)
@@ -173,7 +174,7 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
         return try {
             // Verify there isn't another entry for this port in the same time slot.
             verifyScheduleSlotAvailable(portId!!, start, end)
-            val signedTx = rpcOps.startTrackedFlow(ScheduleEntryFlow::Initiator, portId, start, end).returnValue.getOrThrow()
+            val signedTx = rpcOps.startTrackedFlow(ScheduleEntryFlow::Initiator, portId, owner, start, end).returnValue.getOrThrow()
             Response.status(CREATED).entity("schedule entry transaction id ${signedTx.id} committed to ledger.\n").build()
 
         } catch (ex: Throwable) {

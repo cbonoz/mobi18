@@ -1,5 +1,6 @@
 package com.portx.contract
 
+import com.portx.contract.ScheduleEntryContract.Companion.OWNER_NOT_PRESENT_ERROR
 import com.portx.contract.ScheduleEntryContract.Companion.PORT_NOT_PRESENT_ERROR
 import com.portx.contract.ScheduleEntryContract.Companion.SCHEDULE_CONTRACT_ID
 import com.portx.contract.ScheduleEntryContract.Companion.START_TIME_GREATER_ERROR
@@ -15,7 +16,7 @@ class ScheduleEntryContractTest {
     private val ledgerServices = MockServices()
     private val megaCorp = TestIdentity(CordaX500Name("MegaCorp", "London", "GB"))
     private val miniCorp = TestIdentity(CordaX500Name("MiniCorp", "New York", "US"))
-    private val scheduleEntryState = ScheduleEntryState("portId", miniCorp.party, 100, 1000)
+    private val scheduleEntryState = ScheduleEntryState("portId", "owner", miniCorp.party, 100, 1000)
 
     @Test
     fun `transaction must include Create command`() {
@@ -109,6 +110,18 @@ class ScheduleEntryContractTest {
                 output(SCHEDULE_CONTRACT_ID, badState)
                 command(listOf(miniCorp.publicKey), ScheduleEntryContract.Commands.Create())
                 `fails with`(PORT_NOT_PRESENT_ERROR)
+            }
+        }
+    }
+
+    @Test
+    fun `cannot create ownerless ScheduleEntrys`() {
+        ledgerServices.ledger {
+            transaction {
+                val badState = scheduleEntryState.copy(owner = "")
+                output(SCHEDULE_CONTRACT_ID, badState)
+                command(listOf(miniCorp.publicKey), ScheduleEntryContract.Commands.Create())
+                `fails with`(OWNER_NOT_PRESENT_ERROR)
             }
         }
     }

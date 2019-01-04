@@ -29,6 +29,8 @@ class ScheduleEntryContract : Contract {
         val START_TIME_POSITIVE_ERROR = "The schedule entry's start time must be greater than 0."
         @JvmStatic
         val START_TIME_GREATER_ERROR = "The schedule entry's end time must be greater than the start time."
+        @JvmStatic
+        val OWNER_NOT_PRESENT_ERROR = "The schedule entry's owner must be present."
     }
 
     /**
@@ -45,9 +47,10 @@ class ScheduleEntryContract : Contract {
             "All of the participants must be signers." using (command.signers.containsAll(out.participants.map { it.owningKey }))
 
             // entry-specific constraints.
-            PORT_NOT_PRESENT_ERROR using (!out.portId.isBlank())
+            PORT_NOT_PRESENT_ERROR using out.portId.isNotBlank()
             START_TIME_POSITIVE_ERROR using (out.startTime >= 0)
             START_TIME_GREATER_ERROR using (out.endTime > out.startTime)
+            OWNER_NOT_PRESENT_ERROR using out.owner.isNotBlank()
         }
     }
 

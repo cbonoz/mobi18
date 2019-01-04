@@ -21,19 +21,21 @@ import net.corda.core.schemas.QueryableState
  * @param endtime the endTime (epoch ms) of the port reservation
  */
 data class ScheduleEntryState(val portId: String,
-                              val owner: Party,
+                              val owner: String,
+                              val signer: Party,
                               val startTime: Long,
                               val endTime: Long,
                               override val linearId: UniqueIdentifier = UniqueIdentifier()):
         LinearState, QueryableState {
     /** The public keys of the involved parties. */
-    override val participants: List<AbstractParty> get() = listOf(owner)
+    override val participants: List<AbstractParty> get() = listOf(signer)
 
     override fun generateMappedObject(schema: MappedSchema): PersistentState {
         return when (schema) {
             is ScheduleEntrySchemaV1 -> ScheduleEntrySchemaV1.PersistentScheduleEntry(
                     this.portId,
-                    this.owner.name.toString(),
+                    this.owner,
+                    this.signer.name.toString(),
                     this.startTime,
                     this.endTime,
                     this.linearId.id
