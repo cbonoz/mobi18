@@ -6,6 +6,7 @@ server/gradle/
 server/gradlew
 server/server.iml
 server/gradlew.bat
+server/.idea/workspace.xml
 server/logs/
 img/.DS_Store
 .DS_Store

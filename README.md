@@ -16,25 +16,25 @@ PortX provides an online platform for reserving time slots at different ports. T
 
 ## How we built it
 * `portx/` - client side code (website) for the portx project
-* `server/` - server side code (ledger recording and querying logic) for portx
+* `server/` - server side code (ledger recording and querying logic) for portx. This server side code is backed by Corda (an open source blockchain project): https://github.com/corda/corda.
 
 ### The Core Objects
 
-<h5>Schedule Entry Schema</h5>
+<h5>Schedule Entry Schema: </h5>
 <p>The unit of data or state on the PortX ledger.</p>
 <img src="./img/schedule_entry_schema.png" width=600>
 
-<h5>Schedule Entry Contract</h5>
-<p>The contract for initiating/validating a ledger transaction.</p>
+<h5>Schedule Entry Contract:</h5>
+<p>The contract for initiating/validating a ledger transaction. We also then verify that an incoming transaction doesn't conflict with an existing one (i.e. schedule conflict). We require at least one node in the network to sign off on the contract.</p>
 <img src="./img/schedule_entry_contract.png" width=600>
 
-<h5>Schedule Entry Flow</h5>
+<h5>Schedule Entry Flow:</h5>
 <p>The process of agreeing upon ledger updates containing new data.</p>
 <img src="./img/schedule_entry_flow.png" width=600>
 
 ## Challenges we ran into
 
-Creating a scalable blockchain backend was something that we weren't used to doing. We leveraged the open source contract framework corda (https://github.com/corda/corda) to create a ledger-based booking system.
+Creating a distributed ledger backend was something that we weren't used to doing. We wanted to enable blockchain interaction while simultaneously providing core features such as port lookup and search. We leveraged the open source contract framework corda (https://github.com/corda/corda) to create a ledger-based booking system, which we adapted for instead for schedule tracking.
 
 ## Accomplishments that we're proud of
 
