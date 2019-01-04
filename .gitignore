@@ -11,5 +11,4 @@ img/.DS_Store
 .DS_Store
 client/node_modules
 client/build
-test/
-
+test/*
