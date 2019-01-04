@@ -23,6 +23,12 @@ class ScheduleEntryContract : Contract {
     companion object {
         @JvmStatic
         val SCHEDULE_CONTRACT_ID = "com.portx.contract.ScheduleEntryContract"
+        @JvmStatic
+        val PORT_NOT_PRESENT_ERROR = "The schedule entry's port id must be present."
+        @JvmStatic
+        val START_TIME_POSITIVE_ERROR = "The schedule entry's start time must be greater than 0."
+        @JvmStatic
+        val START_TIME_GREATER_ERROR = "The schedule entry's end time must be greater than the start time."
     }
 
     /**
@@ -39,9 +45,9 @@ class ScheduleEntryContract : Contract {
             "All of the participants must be signers." using (command.signers.containsAll(out.participants.map { it.owningKey }))
 
             // entry-specific constraints.
-            "The schedule entry's port id must be present." using (!out.portId.isBlank())
-            "The schedule entry's start time must be non-negative." using (out.startTime > 0)
-            "The schedule entry's end time must be non-negative." using (out.endTime > 0)
+            PORT_NOT_PRESENT_ERROR using (!out.portId.isBlank())
+            START_TIME_POSITIVE_ERROR using (out.startTime >= 0)
+            START_TIME_GREATER_ERROR using (out.endTime > out.startTime)
         }
     }
 
