@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="img/portx.png" alt="PortX" width="400">
+</p>
+
 # PortX
 
 <!-- A port reservation system powered by blockchain -->
