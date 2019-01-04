@@ -79,6 +79,9 @@ Refer to <a href="https://docs.corda.net/tutorial-cordapp.html#running-nodes-acr
 
 The app should now be running on port 8000, with the server responding on port 8001.
 
+## Booking/Reserving via the API
+<!-- TODO: Add api documentation for booking and querying reservations -->
+
 ## What's next for PortX
 
 Next step would be to pilot the reservation system with a few ports. This could be done with not a lot of overhead as long as we have access to some subset of their scheduling manifest information. The bookings can be managed autonomously through the PortX API if scripted.
