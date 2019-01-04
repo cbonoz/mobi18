@@ -18,6 +18,20 @@ PortX provides an online platform for reserving time slots at different ports. T
 * `portx/` - client side code (website) for the portx project
 * `server/` - server side code (ledger recording and querying logic) for portx
 
+### The Core Objects
+
+<h5>Schedule Entry Schema</h5>
+<p>The unit of data or state on the PortX ledger.</p>
+<img src="./img/schedule_entry_schema.png" width=600>
+
+<h5>Schedule Entry Contract</h5>
+<p>The contract for initiating/validating a ledger transaction.</p>
+<img src="./img/schedule_entry_contract.png" width=600>
+
+<h5>Schedule Entry Flow</h5>
+<p>The process of agreeing upon ledger updates containing new data.</p>
+<img src="./img/schedule_entry_flow.png" width=600>
+
 ## Challenges we ran into
 
 Creating a scalable blockchain backend was something that we weren't used to doing. We leveraged the open source contract framework corda (https://github.com/corda/corda) to create a ledger-based booking system.
