@@ -202,16 +202,14 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
             val endAfter = ScheduleEntrySchemaV1.PersistentScheduleEntry::endTime.greaterThanOrEqual(end)
             val startBefore = ScheduleEntrySchemaV1.PersistentScheduleEntry::startTime.lessThanOrEqual(start)
 
+            val endInBounds = QueryCriteria.VaultCustomQueryCriteria(endStartCondition).and(QueryCriteria.VaultCustomQueryCriteria(endEndCondition))
+            val startInBounds = QueryCriteria.VaultCustomQueryCriteria(startStartCondition).and(QueryCriteria.VaultCustomQueryCriteria(startEndCondition))
+            val rangeCovered = QueryCriteria.VaultCustomQueryCriteria(startBefore).and(QueryCriteria.VaultCustomQueryCriteria(endAfter))
+
             // Verify that the portId matches and one of the start or end times falls within the query range, or another booking covers this range.
-            val criteria = generalCriteria
-                    .and(QueryCriteria.VaultCustomQueryCriteria(portIdType))
-                    .and(
-                            QueryCriteria.VaultCustomQueryCriteria(endStartCondition)
-                                    .or(QueryCriteria.VaultCustomQueryCriteria(endEndCondition))
-                                    .or(QueryCriteria.VaultCustomQueryCriteria(startStartCondition))
-                                    .or(QueryCriteria.VaultCustomQueryCriteria(startEndCondition))
-                                    .or(QueryCriteria.VaultCustomQueryCriteria(startBefore).and(QueryCriteria.VaultCustomQueryCriteria(endAfter)))
-                    )
+            val criteria = generalCriteria.and(QueryCriteria.VaultCustomQueryCriteria(portIdType))
+                    .and(startInBounds.or(endInBounds).or(rangeCovered))
+
             rpcOps.vaultQueryBy<ScheduleEntryState>(criteria).states
         }
     }

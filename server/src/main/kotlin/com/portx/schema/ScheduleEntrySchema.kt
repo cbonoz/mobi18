@@ -13,7 +13,7 @@ import javax.persistence.Table
 object ScheduleEntrySchema
 
 /**
- * Schedule Entry schema for PortX.
+ * Schedule Entry schema.
  */
 object ScheduleEntrySchemaV1 : MappedSchema(
         schemaFamily = ScheduleEntrySchema.javaClass,
