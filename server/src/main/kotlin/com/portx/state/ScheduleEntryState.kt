@@ -22,6 +22,8 @@ import net.corda.core.schemas.QueryableState
  */
 data class ScheduleEntryState(val portId: String,
                               val owner: String,
+                              val terminal: String,
+                              val description: String,
                               val signer: Party,
                               val startTime: Long,
                               val endTime: Long,
@@ -35,6 +37,8 @@ data class ScheduleEntryState(val portId: String,
             is ScheduleEntrySchemaV1 -> ScheduleEntrySchemaV1.PersistentScheduleEntry(
                     this.portId,
                     this.owner,
+                    this.terminal,
+                    this.description,
                     this.signer.name.toString(),
                     this.startTime,
                     this.endTime,

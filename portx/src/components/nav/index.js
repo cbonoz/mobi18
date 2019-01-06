@@ -13,13 +13,13 @@ export default () => (
     </Navbar.Brand>
   </Navbar.Header>
   <Nav pullRight>
-    <NavItem eventKey={1} href="#">
+    <NavItem eventKey={1} href="/schedule">
       Schedule A Pickup
     </NavItem>
-    <NavItem eventKey={2} href="#">
+    <NavItem eventKey={2} href="/">
       View Schedules
     </NavItem>
-    <NavItem eventKey={3} href="#">
+    <NavItem eventKey={3} href="/about">
       About
     </NavItem>
   </Nav>

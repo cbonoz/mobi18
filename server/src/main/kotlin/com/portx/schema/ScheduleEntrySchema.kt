@@ -25,6 +25,12 @@ object ScheduleEntrySchemaV1 : MappedSchema(
             @Column(name = "port_id")
             var portId: String,
 
+            @Column(name = "terminal")
+            var terminal: String,
+
+            @Column(name = "description")
+            var description: String,
+
             @Column(name = "owner")
             var owner: String,
 
@@ -41,6 +47,6 @@ object ScheduleEntrySchemaV1 : MappedSchema(
             var linearId: UUID
     ) : PersistentState() {
         // Default constructor required by hibernate.
-        constructor(): this("", "", "", 0, 0, UUID.randomUUID())
+        constructor() : this("", "", "", "", "", 0, 0, UUID.randomUUID())
     }
 }

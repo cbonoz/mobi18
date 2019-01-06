@@ -5,6 +5,7 @@ import com.portx.contract.ScheduleEntryContract
 import com.portx.contract.ScheduleEntryContract.Companion.SCHEDULE_CONTRACT_ID
 import com.portx.flow.ScheduleEntryFlow.Acceptor
 import com.portx.flow.ScheduleEntryFlow.Initiator
+import com.portx.schema.ScheduleEntryPayload
 import com.portx.state.ScheduleEntryState
 import net.corda.core.contracts.Command
 import net.corda.core.contracts.requireThat
@@ -29,7 +30,7 @@ object ScheduleEntryFlow {
 
     @InitiatingFlow
     @StartableByRPC
-    class Initiator(val portId: String, val owner: String, val start: Long, val end: Long) : FlowLogic<SignedTransaction>() {
+    class Initiator(val payload: ScheduleEntryPayload) : FlowLogic<SignedTransaction>() {
         /**
          * The progress tracker checkpoints each stage of the flow and outputs the specified messages when each
          * checkpoint is reached in the code. See the 'progressTracker.currentStep' expressions within the call() function.
@@ -63,7 +64,15 @@ object ScheduleEntryFlow {
             // Stage 1.
             progressTracker.currentStep = GENERATING_TRANSACTION
             // Generate an unsigned transaction with the first legal entity as the owner.
-            val scheduleEntryState = ScheduleEntryState(portId, owner, serviceHub.myInfo.legalIdentities.first(), start, end)
+            val scheduleEntryState = ScheduleEntryState(
+                    payload.portId,
+                    payload.owner,
+                    payload.terminal,
+                    payload.description,
+                    serviceHub.myInfo.legalIdentities.first(),
+                    payload.start,
+                    payload.end
+            )
             val txCommand = Command(ScheduleEntryContract.Commands.Create(), scheduleEntryState.participants.map { it.owningKey })
             val txBuilder = TransactionBuilder(notary)
                     .addOutputState(scheduleEntryState, SCHEDULE_CONTRACT_ID)
