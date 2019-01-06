@@ -49,11 +49,12 @@ export default class MyMarkers extends Component {
           key={port.id} 
           position={[ port.latitude, port.longitude ]}
         >
-            <Popup
-              // ref={elem => this.markerReferences[port.id] = elem}
-              focusPort={this.props.focusPort}
-              hello="hi"
-              port={port} /> 
+          <Popup
+            // ref={elem => this.markerReferences[port.id] = elem}
+            focusPort={this.props.focusPort}
+            viewScheduleOfPort={this.props.viewScheduleOfPort}
+            bookTime={this.props.bookTime}
+            port={port} /> 
         </Marker>
         )
       )}

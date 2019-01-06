@@ -2,6 +2,7 @@ import React from 'react'
 
 import Search from '../search'
 import Map from '../map'
+import './style.css'
 
 import { searchPorts } from '../../helper/api'
 
@@ -20,6 +21,15 @@ export default class MainApp extends React.Component {
       // })
   }
 
+  bookTimeForPort(port) {
+    console.log('booking')
+  }
+
+
+  viewScheduleOfPort(port) {
+    console.log('we are going to secheudle for this port', port)
+  }
+
   focusPort = port => {
     this.setState({
       focusedPort: port
@@ -28,16 +38,21 @@ export default class MainApp extends React.Component {
 
   render() {
     return <React.Fragment>
-    <Search
-        focusPort={this.focusPort} 
-        focusedPort={this.state.focusedPort} 
-        searchResults={this.state.ports} 
-        searchFn={this.performSearch}/>
+
+      <div id="app-panel"> 
+        <Search
+          focusPort={this.focusPort} 
+          focusedPort={this.state.focusedPort}
+          searchResults={this.state.ports}
+          searchFn={this.performSearch}/>
+      </div>
 
       <Map 
         ports={this.state.ports} 
         focusedPort={this.state.focusedPort} 
         focusPort={this.focusPort}
+        bookTime={this.bookTimeForPort}
+        viewScheduleOfPort={this.viewScheduleOfPort}
       />
     </React.Fragment>
   }

@@ -37,12 +37,12 @@ export default class Search extends React.Component {
   render() {
     
     return (
-      <div id="searchbar"> 
+      <React.Fragment>
         <form id="inputForm" autoComplete="off" onSubmit={this.onSearchChange}>
           <input id="searchInput" type="text" placeholder="Search Ports"/>
         </form>
         {this.renderSearchResultList()}
-      </div>
+      </React.Fragment>
     )
   }
 }

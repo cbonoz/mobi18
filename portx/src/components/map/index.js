@@ -45,10 +45,8 @@ class MyMap extends Component {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Ports 
-          focusedPort={this.props.focusedPort} 
-            ports={this.props.ports}
-            focusPort={this.props.focusPort}
-          />
+          {...this.props}
+        />
       </Map>
     );
   }
