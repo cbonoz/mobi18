@@ -16,7 +16,7 @@ class ScheduleEntryContractTest {
     private val ledgerServices = MockServices()
     private val megaCorp = TestIdentity(CordaX500Name("MegaCorp", "London", "GB"))
     private val miniCorp = TestIdentity(CordaX500Name("MiniCorp", "New York", "US"))
-    private val scheduleEntryState = ScheduleEntryState("portId", "owner", miniCorp.party, 100, 1000)
+    private val scheduleEntryState = ScheduleEntryState("portId", "owner", "A", "N/A", miniCorp.party, 100, 1000)
 
     @Test
     fun `transaction must include Create command`() {

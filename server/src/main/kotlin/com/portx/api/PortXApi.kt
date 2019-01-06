@@ -106,7 +106,10 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
     @GET
     @Path("schedule/{portId}")
     @Produces(MediaType.APPLICATION_JSON)
-    fun getSchedules(@PathParam("portId") portId: String, @QueryParam("start") start: Long?, @QueryParam("end") end: Long?): Response {
+    fun getSchedules(@PathParam("portId") portId: String,
+                     @PathParam("terminal") terminal: String?,
+                     @QueryParam("start") start: Long?,
+                     @QueryParam("end") end: Long?): Response {
         try {
             validatePortId(portId)
         } catch (ex: Throwable) {
@@ -117,7 +120,7 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
         if (start == null || end == null) {
             return Response.status(OK).entity(getScheduleEntries(portId)).build()
         }
-        return Response.status(OK).entity(getScheduleEntriesInRange(portId, start, end)).build()
+        return Response.status(OK).entity(getScheduleEntriesInRange(portId, terminal, start, end)).build()
     }
 
     private fun validatePortId(portId: String?) {
@@ -159,6 +162,7 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
         val start = payload.start
         val end = payload.end
         val owner = payload.owner
+        val terminal = payload.terminal
 
         try {
             validatePortId(portId)
@@ -173,8 +177,14 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
 
         return try {
             // Verify there isn't another entry for this port in the same time slot.
-            verifyScheduleSlotAvailable(portId!!, start, end)
-            val signedTx = rpcOps.startTrackedFlow(ScheduleEntryFlow::Initiator, portId, owner, start, end).returnValue.getOrThrow()
+            verifyScheduleSlotAvailable(portId, terminal, start, end)
+            val payload = ScheduleEntryPayload(
+                    portId,
+                    start,
+                    end,
+                    terminal
+            )
+            val signedTx = rpcOps.startTrackedFlow(ScheduleEntryFlow::Initiator, payload).returnValue.getOrThrow()
             Response.status(CREATED).entity("schedule entry transaction id ${signedTx.id} committed to ledger.\n").build()
 
         } catch (ex: Throwable) {
@@ -183,18 +193,17 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
         }
     }
 
-    private fun verifyScheduleSlotAvailable(portId: String, start: Long, end: Long) {
-        val violatingSchedules = getScheduleEntriesInRange(portId, start, end)
+    private fun verifyScheduleSlotAvailable(portId: String, terminal: String, start: Long, end: Long) {
+        val violatingSchedules = getScheduleEntriesInRange(portId, terminal, start, end)
 
         if (violatingSchedules.isNotEmpty()) {
             throw Exception("could not insert schedule item, violation by: " + violatingSchedules.joinToString(", "))
         }
     }
 
-    private fun getScheduleEntriesInRange(portId: String, start: Long, end: Long): List<StateAndRef<ScheduleEntryState>> {
+    private fun getScheduleEntriesInRange(portId: String, terminal: String?, start: Long, end: Long): List<StateAndRef<ScheduleEntryState>> {
         val generalCriteria = QueryCriteria.VaultQueryCriteria(Vault.StateStatus.ALL)
         return builder {
-            val portIdType = ScheduleEntrySchemaV1.PersistentScheduleEntry::portId.equal(portId)
             val endStartCondition = ScheduleEntrySchemaV1.PersistentScheduleEntry::endTime.greaterThan(start)
             val endEndCondition = ScheduleEntrySchemaV1.PersistentScheduleEntry::endTime.lessThan(end)
             val startStartCondition = ScheduleEntrySchemaV1.PersistentScheduleEntry::startTime.greaterThan(start)
@@ -206,8 +215,19 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
             val startInBounds = QueryCriteria.VaultCustomQueryCriteria(startStartCondition).and(QueryCriteria.VaultCustomQueryCriteria(startEndCondition))
             val rangeCovered = QueryCriteria.VaultCustomQueryCriteria(startBefore).and(QueryCriteria.VaultCustomQueryCriteria(endAfter))
 
+            val portCondition = QueryCriteria.VaultCustomQueryCriteria(ScheduleEntrySchemaV1.PersistentScheduleEntry::portId.equal(portId))
+            val portCriteria: QueryCriteria
+            if (terminal == null) {
+                // This could be used to completely block off the terminal.
+                portCriteria = portCondition
+            } else {
+                val terminalCondition = QueryCriteria.VaultCustomQueryCriteria(ScheduleEntrySchemaV1.PersistentScheduleEntry::terminal.equal(terminal))
+                // Filter based on the terminal AND port
+                portCriteria = portCondition.and(terminalCondition)
+            }
+
             // Verify that the portId matches and one of the start or end times falls within the query range, or another booking covers this range.
-            val criteria = generalCriteria.and(QueryCriteria.VaultCustomQueryCriteria(portIdType))
+            val criteria = generalCriteria.and(portCriteria)
                     .and(startInBounds.or(endInBounds).or(rangeCovered))
 
             rpcOps.vaultQueryBy<ScheduleEntryState>(criteria).states
