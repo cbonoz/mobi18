@@ -20,10 +20,10 @@ export default class MainApp extends React.Component {
   performSearch = (searchTerm) => {
     const ports = searchPorts(searchTerm)
     this.setState({ ports, focusedPort: ports[0] })
-      // .then(payload => {
-      //   const ports = payload.data
-      //   this.setState({ ports })
-      // })
+    // .then(payload => {
+    //   const ports = payload.data
+    //   this.setState({ ports })
+    // })
   }
 
   bookTimeForPort = port => {

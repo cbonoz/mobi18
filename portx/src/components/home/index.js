@@ -8,9 +8,6 @@ import Nav from '../nav';
 export default class Home extends React.Component {
   
   render() {
-    return (<Fragment>
-      <Nav/>
-      <MainApp/>
-    </Fragment>)
+    return <MainApp/>
   }
 }
