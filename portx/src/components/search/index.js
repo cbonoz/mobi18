@@ -8,28 +8,40 @@ export default class Search extends React.Component {
   }
 
   onSearchChange = event => {
-    // event.preventDefault()
-    // this.props.search(event.target.value)
+    event.preventDefault()
+    this.props.searchFn(event.target.value)
     return false
   }
 
+  searchResultClicked = port => () => this.props.focusPort(port)
 
   renderSearchResultList = () => {
-    const { searchResults } = this.props
+    const { searchResults, focusedPort } = this.props
 
-    return searchResults.map((result, index) => (
-      <li key={index}>{result}</li>
-    ))
+    if (!searchResults || searchResults.length === 0)
+      return null
+
+    return (
+      <ul className="searchList">
+        {searchResults.map((port, index) => (
+          <li className={focusedPort && port.id === focusedPort.id ? 'selected' : ''} 
+          onClick={this.searchResultClicked(port)} 
+          key={index}>
+            <img height="15px" src="port_icon.png" alt="portx icon"/> {port.portname}
+          </li>
+        ))}
+      </ul>
+    )
   }
 
   render() {
     
     return (
       <div id="searchbar"> 
-        <h1>Search</h1>
-        <form id="inputForm" autocomplete="off" onSubmit={this.onSearchChange}>
-          <input id="searchInput" type="text"/>
+        <form id="inputForm" autoComplete="off" onSubmit={this.onSearchChange}>
+          <input id="searchInput" type="text" placeholder="Search Ports"/>
         </form>
+        {this.renderSearchResultList()}
       </div>
     )
   }
