@@ -1,24 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import MyMap from './map'
+import Jumbo from './components/jumbo'
+import Nav from './components/nav/'
+import Search from './components/search/'
+import { searchPorts } from './helper/api'
+import { Row, Col, Grid } from 'react-bootstrap'
 
 class App extends Component {
+
+  state = {
+    ports: []
+  }
+
+  performSearch = (searchTerm) => {
+    // searchPorts(searchTerm)
+    //   .then(payload => {
+    //     const ports = payload.data
+    //     this.setState({ ports })
+    //   })
+  }
+
   render() {
+
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Welcome to PortX
-          </p>
-          <a className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer">
-            Replace me with a Map View, with a header navigation bar.
-          </a>
-        </header>
-      </div>
+      <Fragment>
+        {/* <Nav/> */}
+        <Jumbo/>
+        <Search/>
+        <MyMap ports={this.state.ports} />
+
+      </Fragment>
     );
   }
 }
