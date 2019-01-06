@@ -32,6 +32,8 @@ PortX provides an online platform for reserving time slots at different ports. T
 
 * *port_id*: The identifier for the port (indicated in the manifest ports.json
 * *owner*: The username of the user making the reservation
+* *terminal*: The terminal or door at the port of the reservation.
+* *description*: Varies, can typically discuss the content of the delivery/pickup being processed, or contain other information about the reservation.
 * *signer*: The name of the node signing and validating the transaction for addition to the ledger
 * *start*: The start time of the reservation in ms (epoch).
 * *end*: The end time of the reservation in ms (epoch).

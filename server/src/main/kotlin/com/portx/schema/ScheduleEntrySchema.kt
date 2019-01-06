@@ -20,7 +20,7 @@ object ScheduleEntrySchemaV1 : MappedSchema(
         version = 1,
         mappedTypes = listOf(PersistentScheduleEntry::class.java)) {
     @Entity
-    @Table(name = "iou_states")
+    @Table(name = "schedule_entries")
     class PersistentScheduleEntry(
             @Column(name = "port_id")
             var portId: String,
