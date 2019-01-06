@@ -107,7 +107,7 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
     @Path("schedule/{portId}")
     @Produces(MediaType.APPLICATION_JSON)
     fun getSchedules(@PathParam("portId") portId: String,
-                     @PathParam("terminal") terminal: String?,
+                     @QueryParam("terminal") terminal: String?,
                      @QueryParam("start") start: Long?,
                      @QueryParam("end") end: Long?): Response {
         try {
@@ -171,9 +171,6 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
             return Response.status(BAD_REQUEST).entity(ex.message!!).build()
         }
 
-        if (start == null || end == null) {
-            return Response.status(BAD_REQUEST).entity("start and end timestamp values must be defined as query parameters.\n").build()
-        }
 
         return try {
             // Verify there isn't another entry for this port in the same time slot.
@@ -222,7 +219,7 @@ class PortXApi(private val rpcOps: CordaRPCOps) {
                 portCriteria = portCondition
             } else {
                 val terminalCondition = QueryCriteria.VaultCustomQueryCriteria(ScheduleEntrySchemaV1.PersistentScheduleEntry::terminal.equal(terminal))
-                // Filter based on the terminal AND port
+                // Filter based on the port AND terminal.
                 portCriteria = portCondition.and(terminalCondition)
             }
 
