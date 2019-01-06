@@ -1,0 +1,33 @@
+#booking-view {
+  display: inline-block;
+}
+
+#back-button {
+  text-align: left;
+}
+
+#booking-content {
+  display: inline-block;
+  padding: 30px;
+  /* //\\background-color: rgba(211, 211, 211, 0.8) */
+  border: 3px solid #d3d3d3cc;
+  border-radius: 5px;
+  text-align: left;
+  /* font-size: 20px !important; */
+}
+
+/* #booking-content .booking-content-input div{
+  font-size: 2rem;
+} */
+
+#booking-content .booking-content-input {
+  margin-bottom: 20px;
+}
+
+#picker-popover {
+  z-index: 2000000 !important;
+}
+
+#menu-time {
+  z-index: 2000000 !important;
+}
