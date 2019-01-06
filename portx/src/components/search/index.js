@@ -7,10 +7,14 @@ export default class Search extends React.Component {
     searchTerm: ''
   }
 
-  onSearchChange = event => {
+  onSearchSubmit = event => {
     event.preventDefault()
-    this.props.searchFn(event.target.value)
-    return false
+    this.props.searchFn(this.state.searchTerm)
+    return true
+  }
+
+  onInputChange = event => {
+    this.setState({ searchTerm: event.target.value })
   }
 
   searchResultClicked = port => () => this.props.focusPort(port)
@@ -38,8 +42,14 @@ export default class Search extends React.Component {
     
     return (
       <React.Fragment>
-        <form id="inputForm" autoComplete="off" onSubmit={this.onSearchChange}>
-          <input id="searchInput" type="text" placeholder="Search Ports"/>
+        <form id="inputForm" autoComplete="off" onSubmit={this.onSearchSubmit}>
+          <input 
+            id="searchInput" 
+            name="search" 
+            type="text" 
+            placeholder="Search Ports"
+            onChange={this.onInputChange}
+          />
         </form>
         {this.renderSearchResultList()}
       </React.Fragment>

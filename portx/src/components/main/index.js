@@ -4,6 +4,8 @@ import Search from '../search'
 import Map from '../map'
 import ScheduleView from '../ScheduleView'
 import BookingView from '../BookingView'
+import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
 
 import './style.css'
 
@@ -18,12 +20,11 @@ export default class MainApp extends React.Component {
   }
 
   performSearch = (searchTerm) => {
-    const ports = searchPorts(searchTerm)
-    this.setState({ ports, focusedPort: ports[0] })
-    // .then(payload => {
-    //   const ports = payload.data
-    //   this.setState({ ports })
-    // })
+    searchPorts(searchTerm)
+      .then(result => {
+        const ports = result.data
+        this.setState({ ports, focusedPort: ports[0] })
+      })
   }
 
   bookTimeForPort = port => {
@@ -79,6 +80,8 @@ export default class MainApp extends React.Component {
       searchFn={this.performSearch}/>
   }
 
+
+
   getClassForPanel() {
     const { bookingTimePort,  viewSchedulePort} = this.state
     if (bookingTimePort || viewSchedulePort) {
@@ -88,10 +91,23 @@ export default class MainApp extends React.Component {
     return ''
   }
 
+  shouldShowBackButton() {
+    const { bookingTimePort,  viewSchedulePort} = this.state
+    return (bookingTimePort || viewSchedulePort)
+  }
+
   render() {
     return <React.Fragment>
 
       <div id="app-panel" className={this.getClassForPanel()}> 
+        { this.shouldShowBackButton() && (
+          <div id="back-button">
+            <Fab onClick={this.backToSearch} variant="extended" aria-label="Back to Search">
+              <Icon className="fa fa-caret-left"  />
+                  Back To Search
+            </Fab>
+          </div>
+        )}
         {this.renderCorrectDisplay()}
       </div>
 

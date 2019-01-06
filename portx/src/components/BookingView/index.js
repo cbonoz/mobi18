@@ -3,8 +3,6 @@ import { MuiPickersUtilsProvider, InlineTimePicker, InlineDatePicker } from 'mat
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import Fab from '@material-ui/core/Fab';
-import Icon from '@material-ui/core/Icon';
 import Button from '@material-ui/core/Button';
 
 import TextField from '@material-ui/core/TextField';
@@ -23,7 +21,8 @@ export default class BookingView extends React.Component {
 
   state = {
     selectedDate: new Date(),
-    selectedLengthOfTime: 30
+    selectedLengthOfTime: 30,
+    terminal: ''
   };
 
   handleDateChange = date => {
@@ -34,18 +33,20 @@ export default class BookingView extends React.Component {
     this.setState({ selectedLengthOfTime: event.target.value })
   }
 
+  handleTerminalChange = event => {
+    this.setState({ terminal: event.target.value })
+  }
+
+  isSubmitDisabled = () => {
+    return this.state.terminal.length === 0
+  }
+
   render() {
 
     const { selectedDate } = this.state
     const { port } = this.props
     
     return <div id="booking-view">
-    <div id="back-button">
-      <Fab onClick={this.props.backToSearch} variant="extended" aria-label="Back to Search">
-        <Icon className="fa fa-caret-left"  />
-             Back To Search
-      </Fab>
-    </div>
       
       <h1>Schedule a booking at {port.portname}</h1>
 
@@ -82,6 +83,7 @@ export default class BookingView extends React.Component {
           </Select>
           <br/>
           <TextField
+            onChange={this.handleTerminalChange}
             placeholder="Terminal ID"
             className="terminal-input booking-content-input"
             margin="normal"
@@ -93,7 +95,7 @@ export default class BookingView extends React.Component {
             margin="normal"
           />
           <br/>
-          <Button fullWidth variant="contained" color="primary" className="submit-input booking-content-input">
+          <Button disabled={this.isSubmitDisabled()} fullWidth variant="contained" color="primary" className="submit-input booking-content-input">
             Submit Booking
           </Button>
           
