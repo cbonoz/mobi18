@@ -25,7 +25,7 @@ class MyMap extends Component {
    }
 
     return {
-      position: [focusedPort.latitude, focusedPort.longitude],
+      position: [focusedPort.lat, focusedPort.lng],
       zoom: 7
     }
   }

@@ -1,29 +1,31 @@
 import React from 'react'
-import { MuiPickersUtilsProvider, InlineTimePicker, InlineDatePicker } from 'material-ui-pickers';
+import { InlineTimePicker, InlineDatePicker } from 'material-ui-pickers';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 
 import TextField from '@material-ui/core/TextField';
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import './style.css'
-
-const MyTheme = createMuiTheme({
-  typography: {
-    fontSize: '12px'
-  }
-})
 
 export default class BookingView extends React.Component {
 
   state = {
-    selectedDate: new Date(),
+    selectedDate: this.createNewDate(),
     selectedLengthOfTime: 30,
-    terminal: ''
+    terminalId: '',
+    ownerId: '',
+    description: ''
   };
+
+  createNewDate() {
+    const rightNowWithoutDetails = new Date()
+    rightNowWithoutDetails.setSeconds(0)
+    rightNowWithoutDetails.setMilliseconds(0)
+
+    return rightNowWithoutDetails
+  }
 
   handleDateChange = date => {
     this.setState({ selectedDate: date });
@@ -33,25 +35,48 @@ export default class BookingView extends React.Component {
     this.setState({ selectedLengthOfTime: event.target.value })
   }
 
-  handleTerminalChange = event => {
-    this.setState({ terminal: event.target.value })
-  }
+  handleTextChange = fieldName => event => this.setState({ [fieldName ]: event.target.value })
 
   isSubmitDisabled = () => {
-    return this.state.terminal.length === 0
+    return this.state.terminalId.length === 0
+      || this.state.ownerId.length === 0
+      || this.state.description.length === 0
+  }
+
+  submit = () => {
+
+    const convertToSeconds = timeMS => ~~(timeMS / 1000)
+    const findEndTime = startTime => {
+      const endTimeDate = new Date(startTime)
+      endTimeDate.setMinutes( endTimeDate.getMinutes() + this.state.selectedLengthOfTime )
+
+      return endTimeDate.getTime()
+    }
+
+    const startTime = this.state.selectedDate.getTime()
+    const endTime = findEndTime(startTime)
+
+    console.log(startTime, endTime)
+
+    this.props.submitBooking({
+      portId: this.props.port.id,
+      start: convertToSeconds(startTime),
+      end: convertToSeconds(endTime),
+      terminal: this.state.terminalId,
+      owner: this.state.ownerId,
+      description: this.state.description
+    })
   }
 
   render() {
-
     const { selectedDate } = this.state
     const { port } = this.props
     
     return <div id="booking-view">
       
-      <h1>Schedule a booking at {port.portname}</h1>
+      <h1>Schedule a booking at {port.name}</h1>
 
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <MuiThemeProvider theme={MyTheme}>
+      
 
         <div id="booking-content">
           <InlineDatePicker
@@ -83,25 +108,38 @@ export default class BookingView extends React.Component {
           </Select>
           <br/>
           <TextField
-            onChange={this.handleTerminalChange}
+            onChange={this.handleTextChange('terminalId')}
             placeholder="Terminal ID"
             className="terminal-input booking-content-input"
             margin="normal"
           />
           <br/>
           <TextField
-            placeholder="Subscriber ID"
+            onChange={this.handleTextChange('ownerId')}
+            placeholder="Owner ID"
             className="subscriber-input booking-content-input"
             margin="normal"
           />
           <br/>
-          <Button disabled={this.isSubmitDisabled()} fullWidth variant="contained" color="primary" className="submit-input booking-content-input">
+          <TextField
+            onChange={this.handleTextChange('description')}
+            placeholder="Description"
+            className="description-input booking-content-input"
+            margin="normal"
+          />
+          <br/>
+          <Button 
+            disabled={this.isSubmitDisabled()} 
+            fullWidth 
+            variant="contained" 
+            color="primary" 
+            className="submit-input booking-content-input"
+            onClick={this.submit}
+            >
             Submit Booking
           </Button>
           
         </div>
-        </MuiThemeProvider>
-      </MuiPickersUtilsProvider>
     </div>
   }
 }

@@ -31,7 +31,7 @@ export default class Search extends React.Component {
           <li className={focusedPort && port.id === focusedPort.id ? 'selected' : ''} 
           onClick={this.searchResultClicked(port)} 
           key={index}>
-            <img height="15px" src="port_icon.png" alt="portx icon"/> {port.portname}
+            <img height="15px" src="port_icon.png" alt="portx icon"/> {port.name}
           </li>
         ))}
       </ul>

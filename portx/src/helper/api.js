@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 
-const PORT = 10008
+const PORT = 10009
 const BASE_URL = `http://localhost:${PORT}/api/portx`
 
 export function getPorts() {
@@ -14,14 +14,14 @@ export function getPortInfo(portId)  {
 
 export function searchPorts(query, numResults) {
     if (!numResults) {
-        numResults = 5
+        numResults = 8
     }
 
-    const url = `${BASE_URL}/search`
+    const url = `${BASE_URL}/ports/search`
     return axios.post(url, {query, numResults} )
 }
 
-export function createScheduleEntry(portId, start, end, owner, terminal, description) {
+export function createScheduleEntry({ portId, start, end, owner, terminal, description }) {
     if (!owner) {
         owner = 'PortX'
     }

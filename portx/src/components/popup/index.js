@@ -19,7 +19,7 @@ export default class MyPopup extends React.Component {
   
     return (
       <Popup onOpen={this.onOpen} className="port-popup">
-        <h2 className="header">{port.portname}</h2>
+        <h2 className="header">{port.name}</h2>
         <div className="button-section">
           <Button 
             onClick={() => this.props.bookTime(port)} 

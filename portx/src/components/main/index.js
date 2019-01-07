@@ -4,19 +4,30 @@ import Search from '../search'
 import Map from '../map'
 import ScheduleView from '../ScheduleView'
 import BookingView from '../BookingView'
+import SnackBar from '../snackbar'
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiPickersUtilsProvider } from 'material-ui-pickers'
+import DateFnsUtils from '@date-io/date-fns';
 
 import './style.css'
+import { searchPorts, createScheduleEntry } from '../../helper/api'
 
-import { searchPorts } from '../../helper/api'
+const MyTheme = createMuiTheme({
+  typography: {
+    fontSize: '12px'
+  }
+})
+
 
 export default class MainApp extends React.Component {
 
   state = {
     bookingTimePort: null,
     viewSchedulePort: null,
-    ports: []
+    ports: [],
+    snackbarOpen: false
   }
 
   performSearch = (searchTerm) => {
@@ -43,6 +54,27 @@ export default class MainApp extends React.Component {
     console.log('we are going to secheudle for this port', port)
   }
 
+  submitBooking = bookingData => {
+    createScheduleEntry(bookingData)
+      .then(result => {
+        if (result.status === 201) {
+          this.setState({ 
+            snackMessage: 'Successfully scheduled time', 
+            snackType: 'success',
+            snackbarOpen: true
+          })
+        }
+      }).catch(error => {
+        this.setState({ 
+          snackMessage: 'Time already taken!', 
+          snackType: 'error',
+          snackbarOpen: true
+        })
+      })
+  }
+
+  closeSnackBar = () => this.setState({ snackbarOpen: false })
+
   focusPort = port => {
     this.setState({
       focusedPort: port
@@ -63,6 +95,7 @@ export default class MainApp extends React.Component {
       return <BookingView
         port={this.state.focusedPort}
         backToSearch={this.backToSearch}
+        submitBooking={this.submitBooking}
       />
     }
 
@@ -97,7 +130,8 @@ export default class MainApp extends React.Component {
   }
 
   render() {
-    return <React.Fragment>
+    return <MuiThemeProvider theme={MyTheme}>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
 
       <div id="app-panel" className={this.getClassForPanel()}> 
         { this.shouldShowBackButton() && (
@@ -118,6 +152,14 @@ export default class MainApp extends React.Component {
         bookTime={this.bookTimeForPort}
         viewScheduleOfPort={this.viewScheduleOfPort}
       />
-    </React.Fragment>
+
+      <SnackBar
+        open={this.state.snackbarOpen}
+        close={this.closeSnackBar}
+        message={this.state.snackMessage}
+        type={this.state.snackType}
+      />
+      </MuiPickersUtilsProvider>
+    </MuiThemeProvider>
   }
 }
