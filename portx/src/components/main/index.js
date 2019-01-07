@@ -61,7 +61,8 @@ export default class MainApp extends React.Component {
           this.setState({ 
             snackMessage: 'Successfully scheduled time', 
             snackType: 'success',
-            snackbarOpen: true
+            snackbarOpen: true,
+            bookingTimePort: null
           })
         }
       }).catch(error => {

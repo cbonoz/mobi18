@@ -1,0 +1,12 @@
+.schedule-view-list {
+  list-style: none;
+  font-size: 16px;
+}
+
+.schedule-view-list li {
+  margin: 5px;
+}
+
+.schedule-view-list li span{
+  margin: 0px 5px;
+}

@@ -46,3 +46,8 @@ export function createScheduleEntry({ portId, start, end, owner, terminal, descr
     const url = `${BASE_URL}/schedule`
     return axios.post(url, payload)
 }
+
+export function findBookingsInRange({ portId, start, end }) {
+    const url = `${BASE_URL}/schedule/${portId}?start=${start}&end=${end}`
+    return axios.get(url)
+}
