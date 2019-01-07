@@ -52,7 +52,7 @@ export default class ScheduleView extends React.Component {
 
   renderScheduledPickups = () => {
     return this.state.bookings.map((booking, index) => (
-      <div key={index}>
+      <div className="cards" key={index}>
         <ScheduleCard booking={booking} />
       </div>
     ))
