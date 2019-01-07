@@ -1,6 +1,7 @@
 import React from 'react'
 import { InlineTimePicker, InlineDatePicker } from 'material-ui-pickers';
 import { findBookingsInRange } from '../../helper/api'
+import ScheduleCard from '../ScheduleCard'
 
 import './style.css'
 export default class ScheduleView extends React.Component {
@@ -31,8 +32,12 @@ export default class ScheduleView extends React.Component {
 
     findBookingsInRange({ portId: this.props.port.id, ...times })
       .then(result => {
-        this.setState({
-          bookings: result.data.map(data => data.state.data)
+          this.setState({
+            bookings: result.data.map(data => ({
+              ...data.state.data,
+              notary: data.state.notary,
+              hash: data.ref.txhash
+          }))
         })
       }).catch(error => {
         console.log('could not look up the port times', error)
@@ -47,12 +52,9 @@ export default class ScheduleView extends React.Component {
 
   renderScheduledPickups = () => {
     return this.state.bookings.map((booking, index) => (
-      <li key={index}>
-        <i className="fas fa-truck-moving"></i>
-        <span>Owner: {booking.owner}</span>
-        <span>Terminal: {booking.terminal}</span>
-        <span>Description: {booking.description}</span>
-      </li>
+      <div key={index}>
+        <ScheduleCard booking={booking} />
+      </div>
     ))
   }
 
@@ -70,9 +72,9 @@ export default class ScheduleView extends React.Component {
         />
         { this.state.bookings.length === 0 
           ? <h3>There are no bookings...</h3>
-          : <ul className="schedule-view-list">
+          : <div className="schedule-view-list">
               {this.renderScheduledPickups()}
-            </ul>
+            </div>
         }
       </div>
   )}

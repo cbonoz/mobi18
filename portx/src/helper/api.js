@@ -14,7 +14,7 @@ export function getPortInfo(portId)  {
 
 export function searchPorts(query, numResults) {
     if (!numResults) {
-        numResults = 8
+        numResults = 15
     }
 
     const url = `${BASE_URL}/ports/search`

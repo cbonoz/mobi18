@@ -76,8 +76,6 @@ export default class BookingView extends React.Component {
       
       <h1>Schedule a booking at {port.name}</h1>
 
-      
-
         <div id="booking-content">
           <InlineDatePicker
             className="booking-content-input"
