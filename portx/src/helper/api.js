@@ -1,56 +1,53 @@
-const library = (function () {
-    const axios = require('axios');
 
-    const PORT = 10009
-    const BASE_URL = `http://localhost:${PORT}/api/portx/`
+import axios from 'axios'
 
-    function getPorts() {
-        return axios.get(`${BASE_URL}/ports`)
+const PORT = 10009
+const BASE_URL = `http://localhost:${PORT}/api/portx`
+
+export function getPorts() {
+    return axios.get(`${BASE_URL}/ports`)
+}
+
+export function getPortInfo(portId)  {
+    return axios.get(`${BASE_URL}/ports/${portId}`)
+}
+
+export function searchPorts(query, numResults) {
+    if (!numResults) {
+        numResults = 15
     }
 
-    function getPortInfo(portId)  {
-        return axios.get(`${BASE_URL}/ports/${portId}`)
+    const url = `${BASE_URL}/ports/search`
+    return axios.post(url, {query, numResults} )
+}
+
+export function createScheduleEntry({ portId, start, end, owner, terminal, description }) {
+    if (!owner) {
+        owner = 'PortX'
     }
 
-    function searchPorts(query, numResults) {
-        if (!numResults) {
-            numResults = 5
-        }
-        const url = `${BASE_URL}/search`
-        return axios.post(url, {query, numResults} )
+    if (!description) {
+        description = ''
     }
 
-    function createScheduleEntry(portId, start, end, owner, terminal, description) {
-        if (!owner) {
-            owner = 'PortX'
-        }
-
-        if (!description) {
-            description = ''
-        }
-
-        if (!terminal) {
-            terminal = ''
-        }
-
-        const payload = {
-            portId,
-            start,
-            end,
-            owner,
-            terminal,
-            description
-        }
-
-        const url = `${BASE_URL}/schedule`
-        return axios.post(url, payload)
+    if (!terminal) {
+        terminal = ''
     }
 
-    return {
-        getPorts,
-        getPortInfo
+    const payload = {
+        portId,
+        start,
+        end,
+        owner,
+        terminal,
+        description
     }
 
-})();
-module.exports = library;
+    const url = `${BASE_URL}/schedule`
+    return axios.post(url, payload)
+}
 
+export function findBookingsInRange({ portId, start, end }) {
+    const url = `${BASE_URL}/schedule/${portId}?start=${start}&end=${end}`
+    return axios.get(url)
+}

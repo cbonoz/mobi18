@@ -25,7 +25,7 @@ class MyMap extends Component {
    }
 
     return {
-      position: [focusedPort.latitude, focusedPort.longitude],
+      position: [focusedPort.lat, focusedPort.lng],
       zoom: 7
     }
   }
@@ -45,10 +45,8 @@ class MyMap extends Component {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Ports 
-          focusedPort={this.props.focusedPort} 
-            ports={this.props.ports}
-            focusPort={this.props.focusPort}
-          />
+          {...this.props}
+        />
       </Map>
     );
   }
