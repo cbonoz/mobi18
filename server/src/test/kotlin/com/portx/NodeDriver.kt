@@ -18,7 +18,9 @@ fun main(args: Array<String>) {
         val nodeFutures = listOf(
                 startNode(
                         providedName = CordaX500Name("PortX Host", "Boston", "MA"),
-                        customOverrides = mapOf("rpcSettings.address" to "localhost:10008", "rpcSettings.adminAddress" to "localhost:10048", "webAddress" to "localhost:10009"),
+                        customOverrides = mapOf("rpcSettings.address" to "localhost:10008",
+                                "rpcSettings.adminAddress" to "localhost:10048",
+                                "webAddress" to "localhost:10009"),
                         rpcUsers = listOf(user))
 //                ,
 //                startNode(

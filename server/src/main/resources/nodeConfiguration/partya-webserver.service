@@ -1,5 +1,5 @@
 [Unit]
-Description=Webserver for Corda Node - Party A
+Description=Webserver for PortX Node - Party A
 Requires=network.target
 
 [Service]

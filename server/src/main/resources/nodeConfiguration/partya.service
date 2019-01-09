@@ -1,5 +1,5 @@
 [Unit]
-Description=Corda Node - Party A
+Description=PortX Node - Party A
 Requires=network.target
 
 [Service]

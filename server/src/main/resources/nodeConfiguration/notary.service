@@ -1,5 +1,5 @@
 [Unit]
-Description=Corda Node - Notary
+Description=PortX Node - Notary
 Requires=network.target
 
 [Service]
