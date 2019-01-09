@@ -81,12 +81,11 @@ Refer to <a href="https://docs.corda.net/tutorial-cordapp.html#running-nodes-acr
 
 The app should now be running on port 8000, with the server responding on port 8001.
 
-## Booking/Reserving via the API
-<!-- TODO: Add api documentation for booking and querying reservations -->
-
 ## What's next for PortX
 
-Next step would be to pilot the reservation system with a few ports. This could be done with not a lot of overhead as long as we have access to some subset of their scheduling manifest information. The bookings can be managed autonomously through the PortX API if scripted.
+Next step would be to pilot the reservation system with a few ports or companies. This could be done with not a lot of overhead as long as we have access to some subset of their scheduling manifest information. The bookings can be managed autonomously through the PortX API if scripted. This would allow portx to seemlessly integrate a ledger based reservation system with their current workflows. PortX could also be generalized as a reservation system for other assets shared by vehicles, where those vehicles could be configured to automatically place reservations for the particular time slot which could then be visible to others via the ledger and API's.
+
+PortX can benefit one port (by providing immutability, security, and booking automation) to any number of ports. 
 
 ## Other Resources
 * https://github.com/corda/corda
