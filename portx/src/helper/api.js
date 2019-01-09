@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 
-const PORT = 10009
+const PORT = 9005
 const BASE_URL = `http://ec2-52-3-81-83.compute-1.amazonaws.com:${PORT}/api/portx`
 
 export function getPorts() {
