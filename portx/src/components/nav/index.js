@@ -16,7 +16,7 @@ export default () => (
     </Navbar.Header>
     <Nav pullRight>
       <NavItem eventKey={2}>
-        <Link to="/api">
+        <Link to="/docs">
           API
         </Link>
       </NavItem>

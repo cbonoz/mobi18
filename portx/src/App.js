@@ -18,7 +18,7 @@ class App extends Component {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/about" component={About} />
-              <Route path="/api" component={ApiDocs} />
+              <Route path="/docs" component={ApiDocs} />
 
               {/* TODO: replace About with Schedule component */}
               <Route path="/schedule" component={About} />
